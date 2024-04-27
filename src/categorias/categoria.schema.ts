@@ -4,7 +4,8 @@ import { v4 } from "uuid"
 const schema = new Schema({
     id: {
         type: Schema.Types.UUID,
-        default: () => v4()
+        default: () => v4(),
+        ref: 'Categoria'
     },
     nome: String,
     cor: String

@@ -15,7 +15,9 @@ class TaskController {
     }
 
     async find(req: Request, res: Response) {
-        const tasks = await TaskService.findAll()
+        const groupByCategoria = req.params?.groupByCategoria ? true : false
+
+        const tasks = await TaskService.findAll(groupByCategoria)
         return res.json(tasks)
     }
 
@@ -27,6 +29,26 @@ class TaskController {
     async delete(req: Request, res: Response) {
         const deleteReturn = await TaskService.delete(req.params.id)
         return res.json(deleteReturn)
+    }
+
+    //Rota para calcular a média de conclusão das tarefas.
+    async getMediaDeConclusao(req: Request, res: Response) {
+        const mediaDeConclusao = await TaskService.getMediaDeConclusao()
+        return res.json({media_conclusao: mediaDeConclusao})
+    }
+    
+    //Rota para encontrar a tarefa com a descrição mais longa.
+    async findByDescription(req: Request, res: Response) {
+        const taskFound = await TaskService.findByDescription()
+
+        return res.json({task_encontrada: taskFound[0]});
+    }
+
+    //Rota para encontrar a tarefa mais antiga de um usuário.
+    async findByCreationDate(req: Request, res: Response) {
+        const taskFound = await TaskService.findByCreationDate()
+
+        return res.json({task_encontrada: taskFound[0]});
     }
 }
 

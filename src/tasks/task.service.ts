@@ -1,6 +1,11 @@
+import { Status } from "../enums/status.enum";
 import TaskSchema from "./task.schema";
 
 class TaskService {
+    async findByCreationDate() {
+        return TaskSchema.find()
+    }
+
     async create(task: any) {
         return TaskSchema.create(task);
     }
@@ -9,8 +14,19 @@ class TaskService {
         return TaskSchema.findOne({id: id})
     }
 
-    async findAll() {
-        return TaskSchema.find()
+    async findAll(groupByCategoria = false) {
+        const tasks = await TaskSchema.find()
+        
+        if(!groupByCategoria)
+            return tasks
+        
+        let group:any = {}
+
+        tasks.forEach(q => {
+            group[`${q.categoria_id}`] = q.titulo
+        })
+
+        return group
     }
 
     async update(id: string, task: any) {
@@ -20,6 +36,16 @@ class TaskService {
     async delete(id: string) {
         await TaskSchema.findOneAndDelete({id: id})
         return 'Task Removido com Sucesso'
+    }
+
+    async getMediaDeConclusao() {
+        const tarefasConcluidas = await TaskSchema.find({ status: Status.CONCLUIDA })
+        
+        return tarefasConcluidas.length
+    }
+
+    async findByDescription() {
+        return TaskSchema.find().sort("-descricao").limit(1)
     }
 }
 

@@ -5,6 +5,7 @@ import {v4 as uuidv4} from "uuid";
 const schema = new Schema({
     id: {
         type: Schema.Types.UUID,
+        ref: 'Task',
         default: () => uuidv4()
     },
     titulo: String,
@@ -12,17 +13,19 @@ const schema = new Schema({
     data_conclusao: Date,
     tipo: String,
     status: {
-        type: String,
+        type: "String",
         required: true,
-        enum: [Status.CONCLUIDA, Status.EM_ANDAMENTO, Status.PENDENTE]
+        enum: Object.values(Status)
     },
     categoria_id: {
         type: Schema.Types.UUID,
-        required: false
+        required: false,
+        ref: 'Categoria'
     },
     usuario_id: {
         type: Schema.Types.UUID,
         required: true,
+        ref: 'Usuario'
     }
 }, {timestamps: true});
 
