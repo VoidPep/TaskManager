@@ -11,7 +11,11 @@ const schema = new Schema({
     descricao: String,
     data_conclusao: Date,
     tipo: String,
-    status: {type: Status, required: true},
+    status: {
+        type: String,
+        required: true,
+        enum: [Status.CONCLUIDA, Status.EM_ANDAMENTO, Status.PENDENTE]
+    },
     categoria_id: {
         type: Schema.Types.UUID,
         required: false

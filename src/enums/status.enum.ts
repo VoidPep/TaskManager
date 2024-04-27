@@ -1,5 +1,5 @@
 export enum Status {
-    PENDENTE,
-    EM_ANDAMENTO,
-    CONCLUIDA
+    PENDENTE = "PENDENTE",
+    EM_ANDAMENTO = "EM_ANDAMENTO",
+    CONCLUIDA = "CONCLUIDA"
 }

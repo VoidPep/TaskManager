@@ -1,27 +1,27 @@
 import UsuarioModel from './usuario.schema'
 
-class BookService {
+class UsuarioService {
     async create(usuario: any) {
         return await UsuarioModel.create(usuario)
     }
 
     async findById(id: string) {
-        return UsuarioModel.findById(id)
+        return UsuarioModel.find({id: id});
     }
 
     async findAll() {
         return UsuarioModel.find()
     }
 
-    async update(id: string, book: any) {
-        return UsuarioModel.findByIdAndUpdate(id, {}, {new: true})
+    async update(id: string, usuario: any) {
+        return UsuarioModel.findOneAndUpdate({id: id}, usuario, {new: true})
     }
 
     async delete(id: string) {
-        await UsuarioModel.findByIdAndDelete(id)
+        await UsuarioModel.findOneAndDelete({id: id})
         return 'Usuário Removido com Sucesso'
     }
 }
 
-export default new BookService()
+export default new UsuarioService()
 
