@@ -3,7 +3,7 @@ import TaskSchema from "./task.schema";
 
 class TaskService {
     async findByCreationDate() {
-        return TaskSchema.find()
+        return TaskSchema.findOne().sort({ createdAt: 1 })
     }
 
     async create(task: any) {
